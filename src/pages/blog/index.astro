@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { WHATSAPP_URL, INSTAGRAM } from '../../data/services';
+import { config } from '../../data/clinic-config';
+
+const posts = [
+  { slug: 'lentes-de-resina-tudo-que-voce-precisa-saber', title: 'Lentes de Resina: tudo que voce precisa saber antes de fazer', excerpt: 'Descubra como as lentes de resina podem transformar o seu sorriso em uma unica sessao, quanto custam e para quem sao indicadas.', category: 'Estetica Dental', readTime: '5 min' },
+  { slug: 'quando-procurar-ortodontista', title: 'Quando procurar um ortodontista? 7 sinais de que voce precisa', excerpt: 'Dentes tortos, dores de cabeca e dificuldade para morder podem ser sinais. Saiba quando e hora de agendar.', category: 'Saude Bucal', readTime: '4 min' },
+  { slug: 'implante-dentario-dor-mitos', title: 'Implante dentario doi? Desvendando os mitos', excerpt: 'Um dos maiores medos sobre implantes e a dor. Entenda como funciona e por que e mais tranquilo do que voce imagina.', category: 'Saude Bucal', readTime: '6 min' },
+  { slug: 'harmonizacao-orofacial-dentista', title: 'Por que fazer harmonizacao orofacial com dentista?', excerpt: 'O dentista e o profissional mais capacitado para procedimentos na regiao orofacial. Entenda as vantagens.', category: 'Estetica Dental', readTime: '4 min' },
+  { slug: 'cuidados-apos-limpeza-dental', title: '5 cuidados essenciais apos a limpeza dental', excerpt: 'Fez uma limpeza profissional? Veja o que fazer nas proximas horas e como manter os resultados.', category: 'Dicas e Cuidados', readTime: '3 min' },
+  { slug: 'diferenca-lentes-resina-porcelana', title: 'Lentes de resina vs. porcelana: qual a melhor?', excerpt: 'Entenda as diferencas de durabilidade, preco e resultado para tomar a melhor decisao.', category: 'Estetica Dental', readTime: '5 min' },
+];
+const categories = [...new Set(posts.map((p) => p.category))];
+
+const doctorRef = config.doctor ? `Converse com ${config.doctor.name} pelo WhatsApp.` : 'Converse com nossa equipe pelo WhatsApp.';
+---
+
+<Layout title={`Blog — Dicas de Saude Bucal e Estetica Dental`} description={`Artigos sobre saude bucal, estetica dental e dicas de cuidados. Conteudo da ${config.name} em ${config.neighborhood}.`}>
+
+  <section class="bg-warm-900 py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Blog' }]} />
+      <div class="max-w-3xl animate-on-scroll">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+          Blog <span class="bg-gradient-to-r from-gold-300 to-gold-500 bg-clip-text text-transparent">{config.shortName}</span>
+        </h1>
+        <p class="mt-6 text-lg text-white/50 leading-relaxed">Conteudo confiavel sobre saude bucal, estetica dental e dicas praticas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap gap-2 mb-12 animate-on-scroll">
+        <span class="px-4 py-2 bg-warm-900 text-white text-sm font-medium rounded-full">Todos</span>
+        {categories.map((cat) => (
+          <span class="px-4 py-2 bg-warm-100 text-warm-500 text-sm font-medium rounded-full hover:bg-gold-50 hover:text-gold-600 transition-colors cursor-pointer">{cat}</span>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
+        {posts.map((post) => (
+          <article class="group animate-on-scroll">
+            <div class="luxury-card overflow-hidden h-full flex flex-col">
+              <div class="aspect-[16/10] bg-gradient-to-br from-gold-50 to-warm-50 flex items-center justify-center">
+                <svg class="w-10 h-10 text-gold-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                  <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div class="p-6 flex flex-col flex-1">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="text-xs font-semibold text-gold-600 bg-gold-50 px-2.5 py-1 rounded-full border border-gold-100">{post.category}</span>
+                  <span class="text-xs text-warm-300">{post.readTime}</span>
+                </div>
+                <h2 class="text-lg font-bold text-warm-800 group-hover:text-gold-600 transition-colors leading-snug mb-3">{post.title}</h2>
+                <p class="text-sm text-warm-400 leading-relaxed flex-1">{post.excerpt}</p>
+                <div class="mt-4 pt-4 border-t border-warm-100">
+                  <span class="inline-flex items-center text-[13px] font-semibold text-gold-600 gap-1.5 group-hover:gap-3 transition-all">
+                    Ler artigo
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" /></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {config.instagram && (
+        <p class="text-center text-sm text-warm-300 mt-12 animate-on-scroll">
+          Mais artigos em breve. Acompanhe nosso <a href={config.instagram} target="_blank" rel="noopener noreferrer" class="text-gold-500 hover:underline">Instagram</a>.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-gold-50 border-y border-gold-100">
+    <div class="max-w-3xl mx-auto px-4 text-center animate-on-scroll">
+      <h2 class="text-2xl sm:text-3xl font-bold text-warm-900 mb-4">Duvida sobre saude bucal?</h2>
+      <p class="text-warm-400 mb-8">{doctorRef}</p>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-warm-900 text-white font-bold px-8 py-4 rounded-full hover:bg-warm-800 transition-all btn-press">
+        Falar com a Dentista
+      </a>
+    </div>
+  </section>
+</Layout>

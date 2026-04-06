@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { config } from '../data/clinic-config';
+---
+
+<Layout
+  title="Termos de Uso"
+  description={`Termos de uso do site da ${config.name}. Condicoes de navegacao e utilizacao dos nossos servicos digitais.`}
+>
+
+  <section class="py-16 lg:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumb items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Termos de Uso' },
+      ]} />
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-warm-900 mb-8">Termos de Uso</h1>
+      <p class="text-sm text-warm-400 mb-8">Ultima atualizacao: Abril de 2026</p>
+
+      <div class="prose max-w-none space-y-6 text-warm-500 leading-relaxed">
+        <h2 class="text-xl font-bold text-warm-900 mt-8">1. Aceitacao dos Termos</h2>
+        <p>Ao acessar e utilizar o site da {config.name}, voce concorda com estes termos de uso. Se nao concordar, por favor nao utilize nosso site.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">2. Informacoes do Site</h2>
+        <p>O conteudo deste site tem carater informativo e nao substitui uma consulta odontologica. Diagnosticos e tratamentos devem ser realizados presencialmente por profissionais habilitados.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">3. Propriedade Intelectual</h2>
+        <p>Todo o conteudo do site — textos, imagens, logotipos e design — e de propriedade da {config.name} e esta protegido pela legislacao brasileira de direitos autorais.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">4. Agendamento</h2>
+        <p>Os agendamentos realizados pelo WhatsApp estao sujeitos a disponibilidade da agenda. A confirmacao da consulta sera feita pela nossa equipe.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">5. Limitacao de Responsabilidade</h2>
+        <p>Nao nos responsabilizamos por danos decorrentes do uso das informacoes contidas neste site para fins de autodiagnostico ou automedicacao.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">6. Alteracoes</h2>
+        <p>Reservamo-nos o direito de atualizar estes termos a qualquer momento. A versao vigente estara sempre disponivel nesta pagina.</p>
+      </div>
+    </div>
+  </section>
+
+</Layout>

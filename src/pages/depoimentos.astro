@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { WHATSAPP_URL } from '../data/services';
+import { config } from '../data/clinic-config';
+
+const testimonials = [
+  { name: 'Mariana S.', treatment: 'Lentes de Resina', quote: 'Sempre tive vergonha de sorrir. Depois das lentes de resina, minha autoestima mudou completamente. A equipe e maravilhosa e super cuidadosa.' },
+  { name: 'Carlos R.', treatment: 'Implante Dentario', quote: 'Perdi um dente ha anos e evitava sorrir. O implante ficou tao natural que ninguem percebe. Recomendo de olhos fechados.' },
+  { name: 'Ana Paula L.', treatment: 'Ortodontia', quote: 'Atendimento humanizado de verdade. Me senti acolhida desde a primeira consulta. Os resultados superaram minhas expectativas.' },
+  { name: 'Roberto M.', treatment: 'Harmonizacao Orofacial', quote: 'Procurava um profissional de confianca para harmonizacao e encontrei aqui. Resultado natural, exatamente o que eu queria.' },
+  { name: 'Fernanda O.', treatment: 'Clinica Geral', quote: 'Tinha pavor de dentista. Aqui, pela primeira vez me senti tranquila durante o tratamento. Equipe paciente e muito profissional.' },
+  { name: 'Joao P.', treatment: 'Protese Dentaria', quote: 'Voltei a comer e sorrir com confianca. A protese ficou perfeita e confortavel. Agradeco toda a equipe pelo carinho.' },
+  { name: 'Luciana T.', treatment: 'Lentes de Resina', quote: 'O antes e depois foi incrivel. Todo mundo pergunta o que eu fiz nos dentes. Super satisfeita com o resultado.' },
+  { name: 'Andre S.', treatment: 'Avaliacao Clinica', quote: 'Fui so para uma avaliacao e sai com um plano de tratamento claro e sem pressao. Transparencia total.' },
+  { name: 'Patricia G.', treatment: 'Ortodontia', quote: 'Meu filho adolescente se sentia inseguro com os dentes. Depois do tratamento, a mudanca na autoestima dele foi enorme.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Dentist',
+  name: config.name,
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: '5', reviewCount: String(testimonials.length), bestRating: '5' },
+  review: testimonials.map((t) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: t.name },
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    reviewBody: t.quote,
+  })),
+};
+---
+
+<Layout title="Depoimentos de Pacientes" description={`Veja o que nossos pacientes dizem sobre ${config.name}. Historias reais de transformacao e confianca.`} schema={schema}>
+
+  <section class="bg-warm-900 py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Depoimentos' }]} />
+      <div class="max-w-3xl animate-on-scroll">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+          Quem passou por aqui,<br /><span class="bg-gradient-to-r from-gold-300 to-gold-500 bg-clip-text text-transparent">recomenda</span>
+        </h1>
+        <p class="mt-6 text-lg text-white/50 leading-relaxed">A melhor propaganda e um paciente feliz.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28 relative">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
+        {testimonials.map((t) => (
+          <TestimonialCard name={t.name} treatment={t.treatment} quote={t.quote} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm-900">
+    <div class="max-w-3xl mx-auto px-4 text-center animate-on-scroll">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Sua historia pode ser a proxima</h2>
+      <p class="text-white/40 mb-8">Agende uma avaliacao e comece sua transformacao.</p>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-warm-900 font-bold px-8 py-4 rounded-full hover:bg-gold-50 transition-all btn-press">
+        Agendar Consulta
+      </a>
+    </div>
+  </section>
+</Layout>

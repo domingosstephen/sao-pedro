@@ -1,0 +1,123 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { WHATSAPP_URL } from '../../data/services';
+import { config } from '../../data/clinic-config';
+---
+
+<Layout
+  title="Nossa Equipe"
+  description={config.doctor
+    ? `Conheca ${config.doctor.name} (${config.doctor.cro}) e a equipe da ${config.name}. Profissionais dedicados ao seu sorriso.`
+    : `Conheca a equipe da ${config.name}. Profissionais dedicados ao seu sorriso.`
+  }
+>
+
+  <section class="bg-warm-900 py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumb items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Sobre', href: '/sobre' },
+        { label: 'Nossa Equipe' },
+      ]} />
+
+      <div class="max-w-3xl animate-on-scroll">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+          Pessoas que cuidam<br />
+          <span class="bg-gradient-to-r from-gold-300 to-gold-500 bg-clip-text text-transparent">de pessoas</span>
+        </h1>
+        <p class="mt-6 text-lg text-white/50 leading-relaxed">
+          Uma equipe dedicada, atualizada e apaixonada pelo que faz.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {config.doctor ? (
+        <!-- Featured Doctor -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
+          <div class="animate-on-scroll slide-left">
+            <div class="relative">
+              <div class="absolute -inset-3 bg-gradient-to-br from-gold-100/40 to-transparent rounded-3xl"></div>
+              <div class="relative img-zoom rounded-2xl overflow-hidden">
+                <img
+                  src="/images/gallery-1.webp"
+                  alt={config.doctor.name}
+                  class="w-full aspect-[3/4] object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-on-scroll slide-right">
+            <span class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-gold-600 mb-4">
+              <span class="w-8 h-[1px] bg-gold-400"></span>
+              Fundador(a)
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-warm-900 leading-tight mb-2">
+              {config.doctor.name}
+            </h2>
+            <p class="text-gold-600 font-semibold mb-6">{config.doctor.title} — {config.doctor.cro}</p>
+
+            <p class="text-warm-400 leading-relaxed mb-4">
+              A frente da {config.name}, {config.doctor.name.split(' ')[0]} {config.doctor.name.split(' ')[1]} combina excelencia tecnica com um atendimento genuinamente humanizado. Sua abordagem integrativa considera cada paciente como um todo — corpo, mente e sorriso.
+            </p>
+            <p class="text-warm-400 leading-relaxed mb-6">
+              Com formacao continua e paixao pela odontologia estetica e funcional, lidera uma equipe dedicada a transformar sorrisos e devolver confianca.
+            </p>
+
+            <div class="flex flex-wrap gap-2">
+              {config.doctor.specialties.map((spec) => (
+                <span class="text-xs bg-gold-50 text-gold-700 px-4 py-1.5 rounded-full font-medium border border-gold-100">
+                  {spec}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <!-- Generic Team Section -->
+        <div class="max-w-3xl mx-auto text-center mb-20">
+          <div class="animate-on-scroll">
+            <div class="w-24 h-24 bg-gold-50 rounded-full flex items-center justify-center mx-auto mb-8">
+              <svg class="w-12 h-12 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+              </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-warm-900 mb-4">Nossa Equipe de Profissionais</h2>
+            <p class="text-warm-400 leading-relaxed mb-4">
+              A {config.name} conta com uma equipe de profissionais qualificados e dedicados ao seu bem-estar. Cada membro traz experiencia e paixao pela odontologia.
+            </p>
+            <p class="text-warm-400 leading-relaxed">
+              Nosso compromisso e oferecer um atendimento humanizado, onde voce se sente acolhido e seguro em cada etapa do tratamento.
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm-900">
+    <div class="max-w-3xl mx-auto px-4 text-center animate-on-scroll">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+        {config.doctor ? `Agende com ${config.doctor.name.split(' ')[0]} ${config.doctor.name.split(' ')[1]}` : 'Agende sua consulta'}
+      </h2>
+      <p class="text-white/40 mb-8">
+        Atendimento particular, sem filas. Cuidado que faz a diferenca.
+      </p>
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-white text-warm-900 font-bold px-8 py-4 rounded-full hover:bg-gold-50 transition-all btn-press"
+      >
+        Agendar Consulta
+      </a>
+    </div>
+  </section>
+
+</Layout>

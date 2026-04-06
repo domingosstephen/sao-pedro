@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { config } from '../data/clinic-config';
+---
+
+<Layout
+  title="Politica de Privacidade"
+  description={`Politica de privacidade da ${config.name}. Saiba como tratamos seus dados pessoais em conformidade com a LGPD.`}
+>
+
+  <section class="py-16 lg:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumb items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Politica de Privacidade' },
+      ]} />
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-warm-900 mb-8">Politica de Privacidade</h1>
+      <p class="text-sm text-warm-400 mb-8">Ultima atualizacao: Abril de 2026</p>
+
+      <div class="prose max-w-none space-y-6 text-warm-500 leading-relaxed">
+        <h2 class="text-xl font-bold text-warm-900 mt-8">1. Informacoes que Coletamos</h2>
+        <p>A {config.name} coleta informacoes pessoais fornecidas voluntariamente por voce, como nome, telefone e dados de saude bucal, exclusivamente para fins de agendamento e atendimento odontologico.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">2. Como Utilizamos suas Informacoes</h2>
+        <p>Utilizamos seus dados para: agendar e confirmar consultas; prestar atendimento odontologico personalizado; entrar em contato sobre tratamentos em andamento; e cumprir obrigacoes legais.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">3. Compartilhamento de Dados</h2>
+        <p>Nao compartilhamos, vendemos ou alugamos seus dados pessoais a terceiros, exceto quando exigido por lei ou com seu consentimento explicito.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">4. Seguranca</h2>
+        <p>Adotamos medidas tecnicas e organizacionais para proteger seus dados pessoais contra acesso nao autorizado, perda ou destruicao.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">5. Seus Direitos (LGPD)</h2>
+        <p>Conforme a Lei Geral de Protecao de Dados (Lei 13.709/2018), voce tem direito a: acessar seus dados; corrigir informacoes incompletas ou desatualizadas; solicitar a eliminacao de dados desnecessarios; e revogar o consentimento.</p>
+
+        <h2 class="text-xl font-bold text-warm-900 mt-8">6. Contato</h2>
+        <p>Para exercer seus direitos ou esclarecer duvidas sobre esta politica, entre em contato pelo WhatsApp: {config.phone}.</p>
+      </div>
+    </div>
+  </section>
+
+</Layout>

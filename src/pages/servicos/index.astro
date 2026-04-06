@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { services, WHATSAPP_URL } from '../../data/services';
+import { config } from '../../data/clinic-config';
+
+const doctorRef = config.doctor ? ` com ${config.doctor.name}` : '';
+---
+
+<Layout
+  title="Servicos Odontologicos"
+  description={`Conheca todos os tratamentos da ${config.name}: ortodontia, implantes, lentes de resina, harmonizacao orofacial, clinica geral e mais.`}
+>
+
+  <section class="bg-warm-900 py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Servicos' }]} />
+      <div class="max-w-3xl animate-on-scroll">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+          Tratamentos que<br /><span class="bg-gradient-to-r from-gold-300 to-gold-500 bg-clip-text text-transparent">transformam sorrisos</span>
+        </h1>
+        <p class="mt-6 text-lg text-white/50 leading-relaxed">
+          Cada tratamento e personalizado para o seu caso. Da prevencao a estetica dental.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28 relative">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
+        {services.map((service) => (
+          <ServiceCard
+            icon={service.icon}
+            title={service.shortTitle}
+            description={service.description.substring(0, 120) + '...'}
+            href={`/servicos/${service.slug}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-gold-50 border-y border-gold-100">
+    <div class="max-w-3xl mx-auto px-4 text-center animate-on-scroll">
+      <h2 class="text-2xl sm:text-3xl font-bold text-warm-900 mb-4">Nao sabe qual tratamento precisa?</h2>
+      <p class="text-warm-400 mb-8">Agende uma avaliacao{doctorRef} e nos criamos o plano ideal — sem compromisso.</p>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-warm-900 text-white font-bold px-8 py-4 rounded-full hover:bg-warm-800 transition-all btn-press">
+        Agendar Avaliacao
+      </a>
+    </div>
+  </section>
+</Layout>

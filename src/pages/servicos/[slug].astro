@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { services, WHATSAPP_URL } from '../../data/services';
+import { config } from '../../data/clinic-config';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+};
+
+const { service } = Astro.props;
+const relatedServices = services.filter((s) => service.related.includes(s.slug));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalProcedure',
+  name: service.title,
+  description: service.description,
+  url: `${config.siteUrl}/servicos/${service.slug}`,
+  provider: {
+    '@type': 'Dentist',
+    name: config.name,
+    address: { '@type': 'PostalAddress', streetAddress: config.address.split(' - ')[0], addressLocality: config.city, addressRegion: config.state, addressCountry: 'BR' },
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: service.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+
+const doctorRef = config.doctor ? ` com ${config.doctor.name}` : '';
+---
+
+<Layout title={service.title} description={service.description} schema={schema}>
+
+  <section class="bg-warm-900 py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumb items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Servicos', href: '/servicos' },
+        { label: service.shortTitle },
+      ]} />
+      <div class="max-w-3xl">
+        <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 animate-on-scroll">
+          <svg class="w-8 h-8 text-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d={service.icon} />
+          </svg>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight animate-on-scroll">
+          {service.title}
+        </h1>
+        <p class="mt-4 text-xl text-gold-300 font-medium animate-on-scroll">{service.tagline}</p>
+        <p class="mt-6 text-lg text-white/50 leading-relaxed max-w-2xl animate-on-scroll">{service.description}</p>
+        <div class="mt-8 animate-on-scroll">
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-warm-900 font-bold px-8 py-4 rounded-full hover:bg-gold-50 transition-all btn-press">
+            Agendar Consulta
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="py-20 lg:py-28 relative">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+        <div>
+          <span class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-gold-600 mb-4">
+            <span class="w-8 h-[1px] bg-gold-400"></span>
+            Beneficios
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-warm-900 leading-[1.1] mb-8">
+            Por que escolher<br />este tratamento?
+          </h2>
+          <div class="space-y-5 stagger">
+            {service.benefits.map((benefit) => (
+              <div class="flex items-start gap-4 animate-on-scroll">
+                <div class="w-7 h-7 bg-gold-50 rounded-full flex items-center justify-center shrink-0 mt-0.5 border border-gold-200">
+                  <svg class="w-3.5 h-3.5 text-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p class="text-warm-600 leading-relaxed">{benefit}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="animate-on-scroll slide-right">
+          <div class="aspect-square bg-gradient-to-br from-gold-50 to-warm-50 rounded-2xl flex items-center justify-center border border-gold-100">
+            <div class="text-center">
+              <svg class="w-24 h-24 text-gold-300 opacity-40 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d={service.icon} />
+              </svg>
+              <p class="text-sm font-medium text-warm-300">Foto do Tratamento</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20 lg:py-28 bg-warm-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 animate-on-scroll">
+        <span class="inline-block text-[11px] font-bold uppercase tracking-[0.25em] text-gold-500 mb-3">Perguntas Frequentes</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-warm-900">Duvidas sobre {service.shortTitle.toLowerCase()}?</h2>
+      </div>
+      <div class="space-y-4 stagger">
+        {service.faq.map((item) => (
+          <details class="group luxury-card animate-on-scroll">
+            <summary class="flex items-center justify-between cursor-pointer p-6 font-semibold text-warm-800 hover:text-gold-600 transition-colors">
+              {item.q}
+              <svg class="w-5 h-5 text-warm-300 group-open:rotate-180 transition-transform shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 text-warm-500 leading-relaxed">{item.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related -->
+  {relatedServices.length > 0 && (
+    <section class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14 animate-on-scroll">
+          <span class="inline-block text-[11px] font-bold uppercase tracking-[0.25em] text-gold-500 mb-3">Servicos Relacionados</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-warm-900">Voce tambem pode se interessar</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 stagger">
+          {relatedServices.map((rel) => (
+            <a href={`/servicos/${rel.slug}`} class="group animate-on-scroll">
+              <div class="luxury-card p-7 text-center">
+                <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                  <svg class="w-6 h-6 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d={rel.icon} />
+                  </svg>
+                </div>
+                <h3 class="font-bold text-warm-800 group-hover:text-gold-600 transition-colors">{rel.shortTitle}</h3>
+                <p class="text-sm text-warm-400 mt-2">{rel.tagline}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="py-16 lg:py-20 bg-warm-900">
+    <div class="max-w-3xl mx-auto px-4 text-center animate-on-scroll">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Agende sua consulta de {service.shortTitle.toLowerCase()}</h2>
+      <p class="text-white/40 mb-8">Atendimento particular{doctorRef}. Resposta pelo WhatsApp em ate 30 min.</p>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-warm-900 font-bold px-8 py-4 rounded-full hover:bg-gold-50 transition-all btn-press">
+        Agendar Agora
+      </a>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>
