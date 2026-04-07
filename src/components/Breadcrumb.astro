@@ -14,7 +14,7 @@ const schemaItems = items.map((item, i) => ({
   '@type': 'ListItem',
   position: i + 1,
   name: item.label,
-  ...(item.href && { item: new URL(item.href, Astro.site || 'https://idealcentroodontologico.com.br').href }),
+  ...(item.href && { item: new URL(item.href, Astro.site || 'https://sao-pedro.vercel.app').href }),
 }));
 
 const schema = {

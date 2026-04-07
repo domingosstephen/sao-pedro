@@ -1,49 +1,40 @@
 @import "tailwindcss";
 
 /* ============================================
-   IDEAL CENTRO ODONTOLÓGICO — Luxury Gold System
+   SAO PEDRO — Warm Terracotta & Earth System
    ============================================ */
 
 @theme {
-  /* Gold Brand Palette */
-  --color-gold-50: #f0fdfa;
-  --color-gold-100: #ccfbf1;
-  --color-gold-200: #99f6e4;
-  --color-gold-300: #5eead4;
-  --color-gold-400: #2dd4bf;
-  --color-gold-500: #14b8a6;
-  --color-gold-600: #0d9488;
-  --color-gold-700: #0f766e;
-  --color-gold-800: #115e59;
-  --color-gold-900: #134e4a;
+  /* Brand Palette */
+  --color-gold-50: #fef7ee;
+  --color-gold-100: #fdecd3;
+  --color-gold-200: #fbd5a7;
+  --color-gold-300: #f8b36a;
+  --color-gold-400: #f58e30;
+  --color-gold-500: #e96f09;
+  --color-gold-600: #c45908;
+  --color-gold-700: #9e450c;
+  --color-gold-800: #7f3b11;
+  --color-gold-900: #6a3211;
 
-  /* Warm Neutrals */
-  --color-warm-50: #fafaf8;
-  --color-warm-100: #f5f3ef;
-  --color-warm-200: #ece8e1;
-  --color-warm-300: #d6d0c5;
-  --color-warm-400: #b5ad9e;
-  --color-warm-500: #8c8475;
-  --color-warm-600: #6b6355;
-  --color-warm-700: #4a443a;
-  --color-warm-800: #2d2a24;
-  --color-warm-900: #1a1815;
+  /* Cool Neutrals */
+  --color-warm-50: #faf9f6;
+  --color-warm-100: #f5f2eb;
+  --color-warm-200: #e8e2d6;
+  --color-warm-300: #d1c7b6;
+  --color-warm-400: #ada08c;
+  --color-warm-500: #877966;
+  --color-warm-600: #655c4a;
+  --color-warm-700: #484136;
+  --color-warm-800: #2e2924;
+  --color-warm-900: #1b1814;
 
   /* Accent — Deep charcoal for text */
-  --color-charcoal: #1a1815;
+  --color-charcoal: #1b1814;
 
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.45, 0, 0.15, 1);
-}
-
-/* Self-hosted font */
-@font-face {
-  font-family: 'Plus Jakarta Sans';
-  src: url('/fonts/PlusJakartaSans-Variable.woff2') format('woff2');
-  font-weight: 200 800;
-  font-style: normal;
-  font-display: swap;
 }
 
 /* ============================================
@@ -102,6 +93,19 @@ body {
   from { width: 0; }
   to { width: 48px; }
 }
+@keyframes textReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(233, 111, 9, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(233, 111, 9, 0.25); }
+}
 
 .animate-on-scroll { opacity: 0; }
 .animate-on-scroll.is-visible { animation: fadeInUp 0.8s var(--ease-out-expo) forwards; }
@@ -117,6 +121,10 @@ body {
 .stagger > .animate-on-scroll:nth-child(5) { animation-delay: 480ms; }
 .stagger > .animate-on-scroll:nth-child(6) { animation-delay: 600ms; }
 
+.text-reveal { animation: textReveal 1s var(--ease-out-expo) forwards; }
+.gradient-animate { background-size: 200% 200%; animation: gradientShift 6s ease infinite; }
+.pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+
 /* ============================================
    Micro-interactions
    ============================================ */
@@ -125,14 +133,14 @@ body {
 }
 .hover-lift:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(20, 184, 166, 0.08), 0 8px 24px rgba(0,0,0,0.04);
+  box-shadow: 0 20px 60px rgba(233, 111, 9, 0.08), 0 8px 24px rgba(0,0,0,0.04);
 }
 
 .hover-glow {
   transition: box-shadow 0.4s ease;
 }
 .hover-glow:hover {
-  box-shadow: 0 0 0 1px var(--color-gold-300), 0 8px 32px rgba(20, 184, 166, 0.12);
+  box-shadow: 0 0 0 1px var(--color-gold-300), 0 8px 32px rgba(233, 111, 9, 0.12);
 }
 
 .btn-press { transition: transform 0.15s ease; }
@@ -192,16 +200,16 @@ body {
   animation: revealLine 0.6s var(--ease-out-expo) forwards;
 }
 
-/* Glass effect — warm tint */
+/* Glass effect */
 .glass {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
-/* Subtle gold border */
+/* Subtle brand border */
 .gold-border {
-  border: 1px solid rgba(20, 184, 166, 0.15);
+  border: 1px solid rgba(233, 111, 9, 0.15);
 }
 
 /* Background decoration watermark */
@@ -218,7 +226,7 @@ body {
 }
 .luxury-card:hover {
   border-color: var(--color-gold-300);
-  box-shadow: 0 20px 60px rgba(20, 184, 166, 0.06), 0 4px 16px rgba(0,0,0,0.03);
+  box-shadow: 0 20px 60px rgba(233, 111, 9, 0.06), 0 4px 16px rgba(0,0,0,0.03);
   transform: translateY(-4px);
 }
 
@@ -241,12 +249,12 @@ body {
 
 /* Shimmer loading effect */
 .shimmer {
-  background: linear-gradient(90deg, transparent, rgba(196,154,60,0.06), transparent);
+  background: linear-gradient(90deg, transparent, rgba(16,185,129,0.06), transparent);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
 
-/* Cursor glow — only on hover areas */
+/* Cursor glow */
 .cursor-glow {
   position: relative;
   overflow: hidden;
@@ -256,7 +264,7 @@ body {
   position: absolute;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(196,154,60,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
